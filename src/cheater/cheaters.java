@@ -8,6 +8,7 @@ import java.util.Scanner;
 
 public class cheaters {
 	public static String filename;
+	public static int seqlen;
 	public static String dir;
     public static ArrayList<File> filelist;
 	public static void main(String[] args) {
@@ -26,6 +27,7 @@ public class cheaters {
 					Scanner scan = new Scanner(file);
 		        	while(scan.hasNext()) {
 		        		seq.add(scan.next().replaceAll("[^a-zA-Z]", ""));
+		        		if(seq.size() == seqlen) {
 		        			System.out.println(seq);
 		        			seq.poll();
 		        		}
@@ -43,6 +45,7 @@ public class cheaters {
     public static void parseArgs(String[] args) {
     	
         filename = null;
+        seqlen = 0;
         filelist = new  ArrayList<File>();
         dir = null;
         if (args.length != 2) {
@@ -69,6 +72,8 @@ public class cheaters {
         }
 
         try {
+        	seqlen = Integer.parseInt(args[1]);
+        	if(seqlen <= 0) {
         		throw new NumberFormatException();
         	}
         }catch(NumberFormatException e) {
