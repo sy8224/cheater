@@ -1,12 +1,13 @@
 package cheater;
 import java.io.File;
 import java.io.FileNotFoundException;
+import java.nio.Buffer;
 import java.util.ArrayList;
+import java.util.LinkedList;
 import java.util.Scanner;
 
 public class cheaters {
 	public static String filename;
-	public static int numFiles;
 	public static String dir;
     public static ArrayList<File> filelist;
 	public static void main(String[] args) {
@@ -15,12 +16,20 @@ public class cheaters {
         System.out.println(filelist);
         File file = null;
         File fileComp = null;
+        LinkedList<String> seq = new LinkedList<String>();
+        
         for(int i = 0; i < filelist.size();i++) {
         	file = filelist.get(i);
 	        for(int j = 1; j < filelist.size();j++) {
 	        	fileComp = filelist.get(j);
 	    		try {
 					Scanner scan = new Scanner(file);
+		        	while(scan.hasNext()) {
+		        		seq.add(scan.next().replaceAll("[^a-zA-Z]", ""));
+		        			System.out.println(seq);
+		        			seq.poll();
+		        		}
+		        	}
 					Scanner scan2 = new Scanner(fileComp);
 				} catch (FileNotFoundException e) {
 					System.out.println("File not Found");
@@ -34,7 +43,6 @@ public class cheaters {
     public static void parseArgs(String[] args) {
     	
         filename = null;
-        numFiles = 0;
         filelist = new  ArrayList<File>();
         dir = null;
         if (args.length != 2) {
@@ -61,8 +69,6 @@ public class cheaters {
         }
 
         try {
-        	numFiles = Integer.parseInt(args[1]);
-        	if(numFiles <= 0) {
         		throw new NumberFormatException();
         	}
         }catch(NumberFormatException e) {
