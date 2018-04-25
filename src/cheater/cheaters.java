@@ -1,6 +1,6 @@
 package cheater;
 import java.io.File;
-import java.text.ParseException;
+import java.io.FileNotFoundException;
 import java.util.ArrayList;
 import java.util.Scanner;
 
@@ -8,16 +8,34 @@ public class cheaters {
 	public static String filename;
 	public static int numFiles;
 	public static String dir;
+    public static ArrayList<File> filelist;
 	public static void main(String[] args) {
 		
 		parseArgs(args);
-		Scanner scan = new Scanner("File");
+        System.out.println(filelist);
+        File file = null;
+        File fileComp = null;
+        for(int i = 0; i < filelist.size();i++) {
+        	file = filelist.get(i);
+	        for(int j = 1; j < filelist.size();j++) {
+	        	fileComp = filelist.get(j);
+	    		try {
+					Scanner scan = new Scanner(file);
+					Scanner scan2 = new Scanner(fileComp);
+				} catch (FileNotFoundException e) {
+					System.out.println("File not Found");
+					System.exit(1);
+				}
+	
+	        }
+		}
 	}
 	
     public static void parseArgs(String[] args) {
     	
         filename = null;
         numFiles = 0;
+        filelist = new  ArrayList<File>();
         dir = null;
         if (args.length != 2) {
         	System.out.println("Invalid Use");
@@ -37,10 +55,11 @@ public class cheaters {
         	System.out.println("This is not a Directory");
         	System.exit(1);
         }
-        ArrayList<File> filelist = new ArrayList<File>();
+
         for(File file : files) {
         	filelist.add(file);
         }
+
         try {
         	numFiles = Integer.parseInt(args[1]);
         	if(numFiles <= 0) {
