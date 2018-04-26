@@ -14,32 +14,53 @@ public class cheaters {
 	public static void main(String[] args) {
 		
 		parseArgs(args);
-        System.out.println(filelist);
+        //System.out.println(filelist);
         File file = null;
         File fileComp = null;
         LinkedList<String> seq = new LinkedList<String>();
-        
+        LinkedList<String> seq2 = new LinkedList<String>();
         for(int i = 0; i < filelist.size();i++) {
         	file = filelist.get(i);
-	        for(int j = 1; j < filelist.size();j++) {
+	        for(int j = i+1; j < filelist.size();j++) {
 	        	fileComp = filelist.get(j);
+	        	int similarities = 0;
+	        	//System.out.println("Comparing "+ file + "against " + fileComp);
 	    		try {
 					Scanner scan = new Scanner(file);
 		        	while(scan.hasNext()) {
 		        		seq.add(scan.next().replaceAll("[^a-zA-Z]", ""));
 		        		if(seq.size() == seqlen) {
-		        			System.out.println(seq);
+							Scanner scan2 = new Scanner(fileComp);
+
+				        	while(scan2.hasNext()) {
+				        		seq2.add(scan2.next().replaceAll("[^a-zA-Z]", ""));
+				        		if(seq2.size() == seqlen) {
+				        			if(seq.equals(seq2)) {
+				        			//	System.out.println("Similarity between" + file + "and " + fileComp);
+				        				//System.out.println(seq);
+				        				//System.out.println(seq2);
+				        				similarities++;
+				        			}
+					        		seq2.poll();
+				        		}
+				        	}
+		        			//System.out.println(seq);
 		        			seq.poll();
+				            scan2.close();
 		        		}
 		        	}
-					Scanner scan2 = new Scanner(fileComp);
+		        	
+		        	
+		            scan.close();
+
 				} catch (FileNotFoundException e) {
 					System.out.println("File not Found");
 					System.exit(1);
 				}
-	
+	    		System.out.println(similarities + "detected between " + file + " and " + fileComp);
 	        }
 		}
+
 	}
 	
     public static void parseArgs(String[] args) {
