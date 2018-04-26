@@ -14,7 +14,6 @@ public class cheaters {
 	public static void main(String[] args) {
 		
 		parseArgs(args);
-        //System.out.println(filelist);
         File file = null;
         File fileComp = null;
         LinkedList<String> seq = new LinkedList<String>();
@@ -44,7 +43,6 @@ public class cheaters {
 					        		seq2.poll();
 				        		}
 				        	}
-		        			//System.out.println(seq);
 		        			seq.poll();
 				            scan2.close();
 		        		}
